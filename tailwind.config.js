@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         heading: "'Cormorant Infant', serif",
-        body: "'Raleway', sans-serif",
+        body: "'Montserrat', sans-serif",
       }
     },
   },
