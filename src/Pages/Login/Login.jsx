@@ -1,10 +1,11 @@
 import { MdHome } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { useRef, useState } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure/useAxiosSecure";
+import useAuthContext from "../../Hooks/useAuthContext/useAuthContext";
 
 
 
@@ -15,6 +16,8 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const axiosSecure = useAxiosSecure();
     const loginForm = useRef(null);
+    const { trackCurrentUser } = useAuthContext();
+    const navigate = useNavigate();
 
 
     // handle user login
@@ -31,10 +34,12 @@ const Login = () => {
         axiosSecure.post("/loginUser", loginData)
             .then(res => {
                 const data = res.data;
-                console.log(data);
                 if (data.login) {
                     successNotify();
                     loginForm.current.reset();
+                    const loggedInData = data.loggedInUserData;
+                    trackCurrentUser(loggedInData?.userName, loggedInData?.userEmail, loggedInData?.userRole)
+                    navigate("/")
                 }
                 else {
                     failedNotify(data.message)

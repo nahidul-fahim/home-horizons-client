@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import useAuthContext from "../useAuthContext/useAuthContext";
 
 // create axios instance
 const axiosSecure = axios.create({
@@ -11,7 +12,7 @@ const useAxiosSecure = () => {
 
 
     // hooks and custom hooks
-    // const { signOutUser } = useAuthContext();
+    const { trackCurrentUser } = useAuthContext();
     const navigate = useNavigate();
 
 
@@ -34,7 +35,7 @@ const useAxiosSecure = () => {
         async (error) => {
             const status = error?.request?.status;
             if (status === 401 || status === 403) {
-                // await signOutUser();
+                await trackCurrentUser(null, null, null);
                 navigate('/login');
             }
             return Promise.reject(error);
