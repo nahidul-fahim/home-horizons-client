@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: "'Cormorant Infant', serif",
+        heading: "'Quattrocento', serif",
         body: "'Montserrat', sans-serif",
       }
     },

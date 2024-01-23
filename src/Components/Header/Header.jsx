@@ -1,5 +1,5 @@
 import { FaBars, FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import useCurrentUser from "../../Hooks/useCurrentUser/useCurrentUser";
 import useAuthContext from "../../Hooks/useAuthContext/useAuthContext";
 import { useState } from "react";
@@ -15,7 +15,7 @@ const Header = () => {
 
     // hooks and custom hooks
     const { trackCurrentUser } = useAuthContext();
-    const { userEmail } = useCurrentUser();
+    const { userName, userEmail, userRole } = useCurrentUser();
     const [loggedOut, setLoggedOut] = useState(false);
 
 
@@ -35,11 +35,41 @@ const Header = () => {
 
 
 
+    // house owner nav menu
+    const houseOwnerMenu =
+        <>
+            {/* dashboard */}
+            {/* <NavLink to="/dashboard"
+                className={({ isActive }) => {
+                    return isActive ? "active-link-style" : "link-style"
+                }}>
+                Dashboard
+            </NavLink> */}
+
+            {/* My houses */}
+            <NavLink to="/dashboard/myHouses"
+                className={({ isActive }) => {
+                    return isActive ? "active-link-style" : "link-style"
+                }}>
+                My Houses
+            </NavLink>
+
+            {/* Add new house */}
+            <NavLink to="/dashboard/addNewHouse"
+                className={({ isActive }) => {
+                    return isActive ? "active-link-style" : "link-style"
+                }}>
+                Add New House
+            </NavLink>
+        </>
+
+
+
 
 
 
     return (
-        <div className="navbar font-heading font-medium bg-white">
+        <div className="navbar container mx-auto p-5 font-heading font-medium bg-white">
             <div className="">
 
                 {/* left side nav */}
@@ -64,20 +94,26 @@ const Header = () => {
             <div className="navbar-end flex-1 justify-end items-center gap-5 text-xl font-semibold">
 
                 {/* common nav menu */}
-                {commonMenu}
+                <div className="hidden lg:flex">
+                    {commonMenu}
+                </div>
 
                 {/* conditional dropdown or login button for user */}
 
                 {
                     userEmail ?
-                        <div className="dropdown dropdown-end text-xl font-semibold">
+                        <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button">
                                 <FaUserCircle className="text-5xl text-main" />
                             </div>
-                            <ul tabIndex={0} className="mt-3 z-[1] p-4 shadow menu menu-sm dropdown-content rounded w-52 text-xl space-y-3 font-semibold">
-                                <a>Settings</a>
+                            <ul tabIndex={0} className="mt-3 z-[1] p-4 shadow menu menu-sm dropdown-content rounded w-52 flex flex-col justify-start items-start gap-4">
+                                <div className="flex flex-col gap-1 justify-center items-center w-full mb-3 bg-[#ffebc6] py-2 rounded">
+                                    <p className="text-[15px] text-black font-body text-center">{userName}</p>
+                                    <p className="text-[13px] capitalize text-black font-body text-center">{userRole}</p>
+                                </div>
+                                {houseOwnerMenu}
                                 <button onClick={logOutUser}
-                                    className="bg-black text-white px-3 py-1 font-body font-medium text-[18px] rounded hover:bg-sub duration-500">Log Out</button>
+                                    className="bg-black text-white px-3 py-2 font-body font-semibold text-[16px] rounded hover:bg-sub duration-500">Log Out</button>
                             </ul>
                         </div>
                         :

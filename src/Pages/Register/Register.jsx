@@ -35,7 +35,7 @@ const Register = () => {
         const userCreationDate = todayDate;
         const userRole = e.target.userRole.value;
 
-        // regular expression for password
+        // regular expression for password and phone
         const passwordRegExPattern = /^(?=.*[A-Z])(?=.*[\W_]).{6,}$/;
         const phoneRegExPattern = /^\+880\d{10}$/;
         setPasswordErrorMessage();

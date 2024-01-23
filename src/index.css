@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Quattrocento:wght@400;700&display=swap');
 
 
 @tailwind base;
@@ -8,4 +8,18 @@
 * {
   margin: 0;
   padding: 0;
+}
+
+.link-style {
+  color: #000;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.active-link-style {
+  color: #D6AD60;
+  transition: all 0.7s;
+  transform: translateX(20px);
+  font-size: 16px;
+  font-weight: 700;
 }

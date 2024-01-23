@@ -39,7 +39,7 @@ const Login = () => {
                     loginForm.current.reset();
                     const loggedInData = data.loggedInUserData;
                     trackCurrentUser(loggedInData?.userName, loggedInData?.userEmail, loggedInData?.userRole)
-                    navigate("/")
+                    navigate("/dashboard")
                 }
                 else {
                     failedNotify(data.message)

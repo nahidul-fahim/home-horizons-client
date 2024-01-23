@@ -4,6 +4,10 @@ import ErrorPage from "../../Components/ErrorPage/ErrorPage";
 import Home from "../../Pages/HomePage/Home";
 import Login from "../../Pages/Login/Login";
 import Register from "../../Pages/Register/Register";
+import Dashboard from "../../Layout/Dashboard/Dashboard";
+import AddNewHouse from "../../Pages/DashboardPages/HouseOwnerDashboard/AddNewHouse/AddNewHouse";
+import MyHouses from "../../Pages/DashboardPages/HouseOwnerDashboard/MyHouses/MyHouses";
+import UpdateHouse from "../../Pages/DashboardPages/HouseOwnerDashboard/UpdateHouse/UpdateHouse";
 
 const router = createBrowserRouter([
     {
@@ -15,6 +19,26 @@ const router = createBrowserRouter([
                 path: "/",
                 element: <Home />,
             },
+            // dashboard
+            {
+                path: "dashboard",
+                element: <Dashboard />,
+                children: [
+                    // house owner dashboard
+                    {
+                        path: "addNewHouse",
+                        element: <AddNewHouse />
+                    },
+                    {
+                        path: "myHouses",
+                        element: <MyHouses />
+                    },
+                    {
+                        path: "updateHouse",
+                        element: <UpdateHouse />
+                    },
+                ]
+            }
         ],
     },
     // login route
@@ -26,7 +50,7 @@ const router = createBrowserRouter([
     {
         path: "/register",
         element: <Register />
-    }
+    },
 ]);
 
 export default router;
