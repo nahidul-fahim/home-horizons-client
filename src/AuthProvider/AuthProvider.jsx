@@ -11,10 +11,11 @@ const AuthProvider = ({ children }) => {
 
 
     // track current loggedIn user
-    const trackCurrentUser = (userName, userEmail, userRole) => {
+    const trackCurrentUser = (userName, userEmail, userRole, userId) => {
         localStorage.setItem('user-name', userName);
         localStorage.setItem('user-email', userEmail);
         localStorage.setItem('user-role', userRole);
+        localStorage.setItem('user-id', userId);
         if (userEmail) {
             const userInfo = { email: userEmail };
             axiosPublic.post("/jwt", userInfo)
@@ -31,6 +32,7 @@ const AuthProvider = ({ children }) => {
             localStorage.removeItem('user-email');
             localStorage.removeItem('user-role');
             localStorage.removeItem('access-token');
+            localStorage.removeItem('user-id');
         }
     }
 

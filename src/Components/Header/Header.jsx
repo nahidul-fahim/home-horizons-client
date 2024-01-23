@@ -106,14 +106,14 @@ const Header = () => {
                             <div tabIndex={0} role="button">
                                 <FaUserCircle className="text-5xl text-main" />
                             </div>
-                            <ul tabIndex={0} className="mt-3 z-[1] p-4 shadow menu menu-sm dropdown-content rounded w-52 flex flex-col justify-start items-start gap-4">
-                                <div className="flex flex-col gap-1 justify-center items-center w-full mb-3 bg-[#ffebc6] py-2 rounded">
-                                    <p className="text-[15px] text-black font-body text-center">{userName}</p>
-                                    <p className="text-[13px] capitalize text-black font-body text-center">{userRole}</p>
+                            <ul tabIndex={0} className="mt-3 z-[1] p-4 shadow-[0_0_50px_-1px_#cccccc] menu menu-sm dropdown-content rounded w-52 flex flex-col justify-start items-start gap-4">
+                                <div className="flex flex-col gap-1 justify-center items-center w-full mb-3 bg-[#e0e0e0] py-2 rounded">
+                                    <p className="text-[16px] text-black font-body text-center">{userName}</p>
+                                    <p className="text-[13px] capitalize text-gray font-body text-center">{userRole}</p>
                                 </div>
                                 {houseOwnerMenu}
                                 <button onClick={logOutUser}
-                                    className="bg-black text-white px-3 py-2 font-body font-semibold text-[16px] rounded hover:bg-sub duration-500">Log Out</button>
+                                    className="bg-black w-full text-white px-3 py-2 font-body font-semibold text-[16px] rounded hover:bg-sub duration-500">Log Out</button>
                             </ul>
                         </div>
                         :

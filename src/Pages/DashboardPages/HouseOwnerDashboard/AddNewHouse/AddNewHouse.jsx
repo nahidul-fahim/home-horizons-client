@@ -4,6 +4,7 @@ import useAxiosPublic from "../../../../Hooks/useAxiosPublic/useAxiosPublic";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure/useAxiosSecure";
 import { Flip, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useCurrentUser from "../../../../Hooks/useCurrentUser/useCurrentUser";
 
 
 // image hosting (imgBB) key and url
@@ -20,6 +21,21 @@ const AddNewHouse = () => {
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
     const addingForm = useRef(null);
+    const { userName, userEmail, userId } = useCurrentUser();
+
+    // city name of Bangladesh
+    const cities = [
+        "Select city", "Barisal", "Bhola", "Bogra", "Brahmanbaria", "Chandpur", "Chapainawabganj",
+        "Chattogram", "Comilla", "Cox's Bazar", "Dhaka", "Dinajpur", "Faridpur",
+        "Feni", "Gaibandha", "Gazipur", "Jamalpur", "Jessore", "Jhalokathi",
+        "Joypurhat", "Khulna", "Kishoreganj", "Kushtia", "Lakshmipur",
+        "Magura", "Manikganj", "Moulvibazar", "Mymensingh", "Narayanganj",
+        "Natore", "Nawabganj", "Narsingdi", "Netrakona", "Noakhali", "Pabna",
+        "Patuakhali", "Rajshahi", "Rangpur", "Sherpur", "Sirajganj",
+        "Sylhet", "Satkhira", "Tangail", "Thakurgaon",
+    ];
+
+
 
 
     // image input and get the file name
@@ -38,11 +54,27 @@ const AddNewHouse = () => {
     }
 
 
+    // get todays date
+    const todayDate = new Date().toISOString().split('T')[0];
+
+
 
     // handle old car product upload for sale by user
     const handleAddNewHouse = e => {
         e.preventDefault();
         const form = e.target;
+
+        const ownerPhone = form.ownerPhone.value;
+        // regular expression for phone
+        const phoneRegExPattern = /^\+880\d{10}$/;
+        setPhoneErrorMessage();
+
+        // phone validation
+        if (!phoneRegExPattern.test(ownerPhone)) {
+            setPhoneErrorMessage("Must start with +880 and contain 13 digits");
+            return;
+        }
+
 
         // if selected image file is available, upload the image to imgBb
         if (selectedImage) {
@@ -58,35 +90,42 @@ const AddNewHouse = () => {
                         const houseName = form.houseName.value;
                         const cityName = form.cityName.value;
                         const houseAddress = form.houseAddress.value;
-                        const bedRooms = form.bedRooms.value;
-                        const bathRooms = form.bathRooms.value;
+                        const bedRooms = parseInt(form.bedRooms.value);
+                        const bathRooms = parseInt(form.bathRooms.value);
                         const roomSize = form.roomSize.value;
-                        const rentPerMonth = form.rentPerMonth.value;
+                        const rentPerMonth = parseInt(form.rentPerMonth.value);
                         const availabilityDate = form.availabilityDate.value;
                         const ownerPhone = form.ownerPhone.value;
                         const houseDescription = form.houseDescription.value;
                         const houseImage = res.data.data.display_url;
                         const addingDate = todayDate;
 
-                        const sellerId = dbCurrentUser?._id;
-                        const sellerName = dbCurrentUser?.name;
-                        const sellerEmail = dbCurrentUser?.email;
-
-
-                        const price = parseInt(priceInString);
-                        const sellerPhone = form.sellerPhone.value;
-                        const approvalStatus = "pending";
-                        const registeredYear = parseInt(registeredYearInString);
-                        const manufactureYear = parseInt(manufactureYearInString);
-                        const engineCapacity = parseInt(engineCapacityInString);
-                        const totalRun = parseInt(totalRunInString);
+                        const houseOwnerName = userName;
+                        const houseOwnerEmail = userEmail;
+                        const houseOwnerId = userId;
 
 
                         //getting the form info into an object
-                        const formInfo = { carName, carBrand, carType, price, carCondition, purchasingDate, description, photo, approvalStatus, addingDate, manufactureYear, engineCapacity, totalRun, fuelType, transmissionType, registeredYear, sellerId, sellerName, sellerEmail, sellerPhone, sellerVerificationStatus, sellerPhoto }
+                        const newHouseData = {
+                            houseName,
+                            cityName,
+                            houseAddress,
+                            bedRooms,
+                            bathRooms,
+                            roomSize,
+                            rentPerMonth,
+                            availabilityDate,
+                            ownerPhone,
+                            houseDescription,
+                            houseImage,
+                            addingDate,
+                            houseOwnerName,
+                            houseOwnerEmail,
+                            houseOwnerId,
+                        }
 
-                        // Send the data to the server and databse
-                        axiosSecure.post("/oldproduct", formInfo)
+                        // Send the data to the server and database
+                        axiosSecure.post("/newHouse", newHouseData)
                             .then(res => {
                                 const data = res.data;
                                 if (data.insertedId) {
@@ -100,35 +139,16 @@ const AddNewHouse = () => {
                             })
                     }
                 })
-                // imgbb file upload error
-                .catch(err => failureNotify(err.code + "|" + err.message))
+                // imgBb file upload error
+                .catch(err => failureNotify(err.code))
         }
     }
 
 
 
 
-    /*
-        // regular expression for phone
-        const phoneRegExPattern = /^\+880\d{10}$/;
-        setPhoneErrorMessage();
-
-            // phone validation
-        if (!phoneRegExPattern.test(phone)) {
-            setPhoneErrorMessage("Must start with +880 and contain 13 digits");
-            return;
-        }
-    */
-
-
-
-
-    // get todays date
-    const todayDate = new Date().toISOString().split('T')[0];
-
-
     // Successful product adding message
-    const successNotify = () => toast.success('New product added successfully!', {
+    const successNotify = () => toast.success('New house added successfully!', {
         position: "top-center",
         autoClose: 1800,
         hideProgressBar: true,
@@ -179,7 +199,12 @@ const AddNewHouse = () => {
                     {/* house city */}
                     <div className='font-body flex flex-col justify-start items-start gap-3 w-full lg:w-1/2'>
                         <label>Enter city name <span className='text-[red]'>*</span></label>
-                        <input required type="text" id='cityName' name='cityName' placeholder='City name' className='w-full border-[1px] border-[#b3b3b3] px-4 py-2 rounded-[3px] focus:outline-none focus:border-lightMain' />
+                        <select required id='cityName' name='cityName' className='w-full border-[1px] border-[#b3b3b3] text-gray px-4 py-2 rounded-[3px] focus:outline-none focus:border-lightMain'>
+                            {
+                                cities.map((city, index) =>
+                                    <option key={index} value={city} className='capitalize'>{city}</option>)
+                            }
+                        </select>
                     </div>
 
                 </div>
@@ -218,7 +243,7 @@ const AddNewHouse = () => {
                 <div className='w-full flex flex-col lg:flex-row justify-center items-center gap-8'>
                     {/* rent */}
                     <div className='font-body flex flex-col justify-start items-start gap-3 w-full lg:w-1/3'>
-                        <label>Enter rent per month <span className='text-[red]'>*</span></label>
+                        <label>Enter rent per month (Taka) <span className='text-[red]'>*</span></label>
                         <input required type="number" id='rentPerMonth' name='rentPerMonth' min="1000" step="1" placeholder='Rent per month' className='w-full border-[1px] border-[#b3b3b3] px-4 py-2 rounded-[3px] focus:outline-none focus:border-lightMain' />
                     </div>
 
