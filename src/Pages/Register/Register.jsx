@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { useRef, useState } from "react";
 import { ToastContainer, toast, Zoom } from 'react-toastify';
@@ -54,14 +54,15 @@ const Register = () => {
 
         const newUserData = { name, email, phone, password, userCreationDate, userRole }
 
-        console.log(newUserData)
-
         axiosSecure.post("/newUser", newUserData)
             .then(res => {
                 const data = res.data;
                 if (data.insertedId) {
                     successNotify();
                     signUpForm.current.reset();
+                }
+                else {
+                    failedNotify(data.message)
                 }
             })
             .catch(err => {
@@ -80,7 +81,7 @@ const Register = () => {
 
     // success notify
     const successNotify = () => toast.success('User created successfully', {
-        position: "top-center",
+        position: "bottom-right",
         autoClose: 1500,
         hideProgressBar: true,
         closeOnClick: true,
@@ -95,8 +96,8 @@ const Register = () => {
 
     // failed notify
     const failedNotify = (errorMessage) => toast.error(`${errorMessage}`, {
-        position: "top-center",
-        autoClose: 1500,
+        position: "bottom-right",
+        autoClose: 2500,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: false,
@@ -114,11 +115,11 @@ const Register = () => {
     return (
         <div className="container mx-auto p-5 min-h-[100vh] flex flex-col justify-center items-center relative">
 
-            <div className="space-y-14 flex flex-col justify-center items-center w-full font-heading">
+            <div className="space-y-14 flex flex-col justify-center items-center w-full font-heading mt-12 md:mt-5">
                 <h2 className="text-5xl text-main font-bold text-center ">Sign up for free!</h2>
 
                 {/* sign up form */}
-                <form onSubmit={handleSignUp} ref={signUpForm} className="flex flex-col justify-center items-center w-full md:w-2/3 lg:w-1/3 space-y-7 lg:space-y-7 px-10 font-body">
+                <form onSubmit={handleSignUp} ref={signUpForm} className="flex flex-col justify-center items-center w-full md:w-2/3 lg:w-1/3 gap-8 px-10 font-body">
 
                     {/* name input */}
                     <div className="w-full flex flex-col justify-center items-start gap-4">
@@ -169,14 +170,14 @@ const Register = () => {
                     </div>
 
                     {/* submit button */}
-                    <input type="submit" value="Sign up" className="bg-main px-4 py-2 rounded text-white font-semibold hover:bg-sub duration-300 w-full" />
+                    <input type="submit" value="Register" className="bg-main px-4 py-2 rounded text-white font-semibold hover:bg-sub duration-300 w-full cursor-pointer" />
 
                     <ToastContainer closeButton={false} />
                 </form>
 
 
                 {/* back to homepage button */}
-                <Link to="/" className="absolute top-0 left-5 flex justify-center items-center gap-2 text-[18px] font-semibold hover:text-main duration-500 hover:scale-105"><MdHome /> Back to Home</Link>
+                <Link to="/" className="absolute top-[-30px] md:top-0 left-5 flex justify-center items-center gap-2 text-xl text-gray font-semibold hover:text-black duration-500"><MdHome /> Back to Home</Link>
             </div>
 
             <div className="flex justify-center items-center flex-col font-body">
