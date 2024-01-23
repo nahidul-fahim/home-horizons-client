@@ -8,8 +8,8 @@ export default {
     colors: {
       white: '#fff',
       black: '#000',
-      main: '#101929',
-      sub: '#e87c00',
+      main: '#122620',
+      sub: '#D6AD60',
       gray: '#545454',
     },
     extend: {
@@ -19,5 +19,5 @@ export default {
       }
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 }
