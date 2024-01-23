@@ -31,6 +31,7 @@ const Login = () => {
         axiosSecure.post("/loginUser", loginData)
             .then(res => {
                 const data = res.data;
+                console.log(data);
                 if (data.login) {
                     successNotify();
                     loginForm.current.reset();

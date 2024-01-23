@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { useRef, useState } from "react";
 import { ToastContainer, toast, Zoom } from 'react-toastify';
@@ -15,6 +15,7 @@ const Register = () => {
     const [phoneErrorMessage, setPhoneErrorMessage] = useState('');
     const axiosSecure = useAxiosSecure();
     const signUpForm = useRef(null);
+    const navigate = useNavigate();
 
 
     // get todays date
@@ -60,6 +61,7 @@ const Register = () => {
                 if (data.insertedId) {
                     successNotify();
                     signUpForm.current.reset();
+                    navigate('/login');
                 }
                 else {
                     failedNotify(data.message)
@@ -68,7 +70,6 @@ const Register = () => {
             .catch(err => {
                 failedNotify(err.code)
             })
-
     };
 
 
