@@ -4,7 +4,8 @@ import useAuthContext from "../useAuthContext/useAuthContext";
 
 // create axios instance
 const axiosSecure = axios.create({
-    baseURL: 'http://localhost:5000'
+    baseURL: 'https://horizon-homes-server.vercel.app'
+    // baseURL: 'http://localhost:5000'
 })
 
 

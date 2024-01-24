@@ -134,7 +134,16 @@ const Header = () => {
                                     <p className="text-[16px] text-black font-body text-center">{userName}</p>
                                     <p className="text-[13px] capitalize text-gray font-body text-center">{userRole}</p>
                                 </div>
-                                {houseOwnerMenu}
+                                {
+                                    userRole === "house owner" ?
+                                        <>
+                                            {houseOwnerMenu}
+                                        </>
+                                        :
+                                        <>
+                                            {houseRenterMenu}
+                                        </>
+                                }
                                 <button onClick={logOutUser}
                                     className="bg-black w-full text-white px-3 py-2 font-body font-semibold text-[16px] rounded hover:bg-sub duration-500">Log Out</button>
                             </ul>

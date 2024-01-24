@@ -1,5 +1,5 @@
 import { MdHome } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
@@ -18,6 +18,7 @@ const Login = () => {
     const loginForm = useRef(null);
     const { trackCurrentUser } = useAuthContext();
     const navigate = useNavigate();
+    const location = useLocation();
 
 
     // handle user login
@@ -39,7 +40,7 @@ const Login = () => {
                     loginForm.current.reset();
                     const loggedInData = data.loggedInUserData;
                     trackCurrentUser(loggedInData?.userName, loggedInData?.userEmail, loggedInData?.userRole, loggedInData?.userId)
-                    navigate("/dashboard")
+                    navigate(location?.state ? location.state : "/dashboard")
                 }
                 else {
                     failedNotify(data.message)

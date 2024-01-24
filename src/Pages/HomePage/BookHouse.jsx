@@ -3,6 +3,8 @@ import { ToastContainer, toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useAxiosSecure from "../../Hooks/useAxiosSecure/useAxiosSecure";
 import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import LoadingAnimation from "../../Components/Shared/LoadingAnimation/LoadingAnimation";
 
 
 
@@ -16,21 +18,37 @@ const BookHouse = () => {
 
 
 
+    // get the single house data
+    const { isPending, data: singleHouse } = useQuery({
+        queryKey: ["single-house", id],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/singleHouse/${id}`)
+            return res.data;
+        }
+    })
+
+
+    if (isPending) {
+        return <LoadingAnimation />
+    }
+
+    const { houseImage, houseName, houseDescription, rentPerMonth } = singleHouse;
+
+
+
     // send the data to database
     const handleRentHouse = e => {
         e.preventDefault();
         const form = e.target;
 
-
         // get data from the login form
-
         const renterId = userId;
         const renterName = userName;
         const renterEmail = userEmail;
         const renterPhone = form.renterPhone.value;
         const rentedHouse = id;
 
-        const houseRentData = { renterId, renterEmail, renterName, renterPhone, rentedHouse }
+        const houseRentData = { renterId, renterEmail, renterName, renterPhone, rentedHouse, houseImage, houseName, houseDescription, rentPerMonth }
 
         // send the data to database for validation
         axiosSecure.post("/houseRent", houseRentData)
@@ -79,6 +97,7 @@ const BookHouse = () => {
         theme: "colored",
         transition: Zoom,
     });
+
 
 
 

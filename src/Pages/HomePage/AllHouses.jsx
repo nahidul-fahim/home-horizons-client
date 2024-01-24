@@ -3,12 +3,26 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic/useAxiosPublic";
 import LoadingAnimation from "../../Components/Shared/LoadingAnimation/LoadingAnimation";
 import { Link } from "react-router-dom";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import useCurrentUser from "../../Hooks/useCurrentUser/useCurrentUser";
+import useAxiosSecure from "../../Hooks/useAxiosSecure/useAxiosSecure";
 
 const AllHouses = () => {
 
 
     // hooks and custom hooks
     const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
+    const { userId } = useCurrentUser();
+
+
+    // fetch user booking data
+    const { isPending: userBookingsPending, data: userBookings } = useQuery({
+        queryKey: ["user-bookings", userId],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/userBookings/${userId}`)
+            return res.data;
+        }
+    })
 
 
     // fetch data
@@ -21,9 +35,10 @@ const AllHouses = () => {
     })
 
 
-    if (allHousePending) {
+    if (allHousePending || userBookingsPending) {
         return <LoadingAnimation />
     }
+
 
 
 
@@ -49,7 +64,12 @@ const AllHouses = () => {
                                 <p className="text-gray">{house?.houseDescription.slice(0, 100)}</p>
                                 <div className="w-full flex justify-between items-center">
                                     <p className="text-[18px] font-semibold text-gray">{house?.rentPerMonth} Tk/month</p>
-                                    <Link to={`/bookHouse/${house?._id}`}><button className="bg-black px-3 py-1 rounded text-white font-medium hover:bg-sub duration-300 flex justify-between items-center gap-2">Book House <FaLongArrowAltRight /></button></Link>
+                                    {
+                                        userBookings.length >= 2 ?
+                                            <button className="bg-gray cursor-not-allowed px-3 py-1 rounded text-white font-medium flex justify-between items-center gap-2">Book House <FaLongArrowAltRight /></button>
+                                            :
+                                            <Link to={`/bookHouse/${house?._id}`}><button className="bg-black px-3 py-1 rounded text-white font-medium hover:bg-sub duration-300 flex justify-between items-center gap-2">Book House <FaLongArrowAltRight /></button></Link>
+                                    }
                                 </div>
                             </div>
                         </div>)
