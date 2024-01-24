@@ -66,10 +66,33 @@ const Header = () => {
 
 
 
+    // house renter nav menu
+    const houseRenterMenu =
+        <>
+            {/* dashboard */}
+            {/* <NavLink to="/dashboard"
+                className={({ isActive }) => {
+                    return isActive ? "active-link-style" : "link-style"
+                }}>
+                Dashboard
+            </NavLink> */}
+
+            {/* Add new house */}
+            <NavLink to="/dashboard/myBookings"
+                className={({ isActive }) => {
+                    return isActive ? "active-link-style" : "link-style"
+                }}>
+                My Bookings
+            </NavLink>
+        </>
+
+
+
+
 
 
     return (
-        <div className="navbar container mx-auto p-5 font-heading font-medium bg-white">
+        <div className="navbar container mx-auto p-5 font-heading font-medium bg-white shadow-[0_10px_10px_#ededed]">
             <div className="">
 
                 {/* left side nav */}

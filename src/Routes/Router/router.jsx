@@ -8,6 +8,8 @@ import Dashboard from "../../Layout/Dashboard/Dashboard";
 import AddNewHouse from "../../Pages/DashboardPages/HouseOwnerDashboard/AddNewHouse/AddNewHouse";
 import MyHouses from "../../Pages/DashboardPages/HouseOwnerDashboard/MyHouses/MyHouses";
 import UpdateHouse from "../../Pages/DashboardPages/HouseOwnerDashboard/UpdateHouse/UpdateHouse";
+import BookHouse from "../../Pages/HomePage/BookHouse";
+import MyBookings from "../../Pages/DashboardPages/HouseRenterDashboard/MyBookings/MyBookings";
 
 const router = createBrowserRouter([
     {
@@ -18,6 +20,10 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Home />,
+            },
+            {
+                path: "bookHouse/:id",
+                element: <BookHouse />
             },
             // dashboard
             {
@@ -36,6 +42,11 @@ const router = createBrowserRouter([
                     {
                         path: "updateHouse/:id",
                         element: <UpdateHouse />
+                    },
+                    // house renter dashboard
+                    {
+                        path: "myBookings",
+                        element: <MyBookings />
                     },
                 ]
             }

@@ -1,9 +1,12 @@
+import AllHouses from "./AllHouses";
+import Banner from "./Banner";
 
 
 const Home = () => {
     return (
-        <div>
-            <h1>Homepage</h1>
+        <div className="container mx-auto px-5">
+            <Banner />
+            <AllHouses />
         </div>
     );
 };
