@@ -23,3 +23,13 @@
   font-size: 16px;
   font-weight: 700;
 }
+
+.table-description {
+  padding: 10px 10px;
+  text-align: center;
+  border: 1px solid rgb(201, 201, 201);
+}
+
+.table-row:hover {
+  background-color: #f0f0f0;
+}

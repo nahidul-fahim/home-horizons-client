@@ -32,7 +32,7 @@ const AddNewHouse = () => {
         "Magura", "Manikganj", "Moulvibazar", "Mymensingh", "Narayanganj",
         "Natore", "Nawabganj", "Narsingdi", "Netrakona", "Noakhali", "Pabna",
         "Patuakhali", "Rajshahi", "Rangpur", "Sherpur", "Sirajganj",
-        "Sylhet", "Satkhira", "Tangail", "Thakurgaon",
+        "Sylhet", "Satkhira", "Tangail", "Thakurgaon"
     ];
 
 
@@ -56,10 +56,11 @@ const AddNewHouse = () => {
 
     // get todays date
     const todayDate = new Date().toISOString().split('T')[0];
+    const todayInString = new Date().toDateString().slice(4);
 
 
 
-    // handle old car product upload for sale by user
+    // handle add new house to the database
     const handleAddNewHouse = e => {
         e.preventDefault();
         const form = e.target;
@@ -98,7 +99,7 @@ const AddNewHouse = () => {
                         const ownerPhone = form.ownerPhone.value;
                         const houseDescription = form.houseDescription.value;
                         const houseImage = res.data.data.display_url;
-                        const addingDate = todayDate;
+                        const addingDate = todayInString;
 
                         const houseOwnerName = userName;
                         const houseOwnerEmail = userEmail;
@@ -145,8 +146,6 @@ const AddNewHouse = () => {
     }
 
 
-
-
     // Successful product adding message
     const successNotify = () => toast.success('New house added successfully!', {
         position: "top-center",
@@ -173,8 +172,6 @@ const AddNewHouse = () => {
         theme: "colored",
         transition: Flip,
     });
-
-
 
 
 

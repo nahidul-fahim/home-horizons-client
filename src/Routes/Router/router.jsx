@@ -34,7 +34,7 @@ const router = createBrowserRouter([
                         element: <MyHouses />
                     },
                     {
-                        path: "updateHouse",
+                        path: "updateHouse/:id",
                         element: <UpdateHouse />
                     },
                 ]

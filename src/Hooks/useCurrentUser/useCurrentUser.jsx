@@ -1,5 +1,3 @@
-
-
 const useCurrentUser = () => {
 
     // getting the data of current user
